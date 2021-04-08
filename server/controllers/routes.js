@@ -27,4 +27,10 @@ module.exports = {
     const routes = await db.search.get_my_routes([user_id]);
     return res.send(routes);
   },
+  deleteRoute: (req, res) => {
+      const {route_id} = req.body;
+      const db = req.app.get("db");
+      db.routes.delete_route([route_id]);
+      return res.sendStatus(200)
+  }
 };

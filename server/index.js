@@ -3,6 +3,7 @@ const express = require("express"),
   massive = require("massive"),
   session = require("express-session"),
   routes = require("./controllers/routes"),
+  comments = require("./controllers/comments")
   bcrypt = require("bcrypt");
 
 const app = express();
@@ -26,6 +27,12 @@ app.get("/api/getRoutes", routes.getAll);
 app.get("/api/getFiltered", routes.filterRoutes);
 app.put("/api/editRoute", routes.editRoute);
 app.get("/api/getMyRoutes", routes.getMyRoutes);
+app.delete('/api/deleteRoute', routes.deleteRoute);
+
+app.get('/api/getComments', comments.getAll);
+app.post('/api/postComment', comments.post);
+app.put('/api/editComment', comments.editComment);
+app.delete('/api/deleteComment', comments.deleteComment);
 
 massive({
   connectionString: CONNECTION_STRING,
