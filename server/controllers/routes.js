@@ -4,6 +4,9 @@ module.exports = {
     const routes = await db.search.get_all_routes();
     return res.send(routes);
   },
+  uploadRoute: (req, res) => {
+    const {};
+  },
   filterRoutes: async (req, res) => {
     const { string } = req.body;
     const db = req.app.get("db");
@@ -28,9 +31,9 @@ module.exports = {
     return res.send(routes);
   },
   deleteRoute: (req, res) => {
-      const {route_id} = req.body;
-      const db = req.app.get("db");
-      db.routes.delete_route([route_id]);
-      return res.sendStatus(200)
-  }
+    const { route_id } = req.body;
+    const db = req.app.get("db");
+    db.routes.delete_route([route_id]);
+    return res.sendStatus(200);
+  },
 };

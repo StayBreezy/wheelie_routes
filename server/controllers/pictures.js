@@ -18,7 +18,7 @@ module.exports = {
      //returns pic urls or just the one url
 
  },
- getMyPics: (req, res) => {
+ getMyPics: async (req, res) => {
     const {user_id} = req.params;
     const db = req.app.get('db');
     const imgs = await db.pictures.get_all_my_pictures([user_id]);
