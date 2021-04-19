@@ -25,3 +25,8 @@ width: 15%;
   height: 50vh;
   width: 75vw;
 }
+
+#map {
+  height: 100px;
+  width: 100px;
+}

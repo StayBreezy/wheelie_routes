@@ -7,11 +7,17 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 
-function Route(props) {
+export default function Route(props) {
   const {id} = props.match.params.id;
-  const [gpx, setGpx] = useState('')
+  const [gpx, setGpx] = useState('');
+  const [route, setRoute] = useState({})
 
   axios.get(`/api/getRoute/${id}`)
+    .then(res => {
+      setGpx(res.data.gpx);
+     setRoute(res.data)
+    })
+    .catch(err => console.log(err))
 
   useEffect(() => {
     var map = L.map("map", {
@@ -85,7 +91,7 @@ function Route(props) {
     <div>
       <Header />
       <div id="map" className="bigMap"></div>
-      <p>miles</p>
+      <p>distance</p>
       <p>vertical gain</p>
       <p>elapsed time</p>
       <p>recommended bike</p>
@@ -126,9 +132,3 @@ function Route(props) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default Route;

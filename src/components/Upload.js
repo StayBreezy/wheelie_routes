@@ -1,14 +1,49 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import L from "leaflet";
+import "../App.css";
+import "leaflet-gpx";
 import axios from "axios";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
+import Header from './Header';
 
-export const Upload = (props) => {
+export default function Upload(props) {
   const [isUploading, setUploading] = useState(false);
   const [url, setUrl] = useState("");
+  const [uploaded, setUploaded] = useState(false);
+  const [data, setData] = useState({});
+  const [bike, setBike] = useState("");
+  const [map, setMap] = useState("");
+  const [water, setWater] = useState(false);
+  const [shops, setShops] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [description, setDescription] = useState("");
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setUploaded(true);
+    if (url != "") {
+      var map = L.map("map");
+      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>',
+      }).addTo(map);
+      new L.GPX(url, { async: true })
+        .on("loaded", function (e) {
+          map.fitBounds(e.target.getBounds());
+          setData({
+            distanceM: e.target.get_distance() / 1000,
+            vertical_gainM: e.target.get_elevation_gain(),
+            distanceI: e.target.get_distance_imp(),
+            vertical_gainI: e.target.get_elevation_gain_imp(),
+          });
+        })
+        .addTo(map);
+    }
+  }, [url]);
   const getSignedRequest = ([file]) => {
     setUploading(true);
 
@@ -46,21 +81,21 @@ export const Upload = (props) => {
       })
       .catch((err) => {
         setUploading(false);
-        if (err.response.status === 403) {
-          alert(
-            `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${err.stack}`
-          );
-        } else {
-          alert(`ERROR: ${err.status}\n ${err.stack}`);
-        }
+        console.log(err);
       });
   };
+
+  function handleClick() {
+    axios
+      .post("/api/uploadroute", { url, data, bike, water, shops, description })
+      .then((res) => setSuccess(true))
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="App">
+      <Header />
       <h1>Upload Route</h1>
-      <h1>{url}</h1>
-      <img src={url} alt="" width="450px" />
-
       <Dropzone
         onDropAccepted={getSignedRequest}
         accept=".gpx"
@@ -91,11 +126,63 @@ export const Upload = (props) => {
           </div>
         )}
       </Dropzone>
+      <div>
+        <p>{`Distance(ft/m): ${data.distanceI}/${data.distanceM}`}</p>
+        <p>{`Vertical Gain(ft/m): ${data.vertical_gainI}/${data.vertical_gainM}`}</p>
+        <form>
+          <p>Recommended Bike</p>
+          <input
+            type="radio"
+            value="MTB"
+            id="MTB"
+            onChange={() => setBike("MTB")}
+            name="bike"
+          />
+          <label for="MTB">MTB</label>
+
+          <input
+            type="radio"
+            value="GRAVEL"
+            id="GRAVEL"
+            onChange={() => setBike("GRAVEL")}
+            name="bike"
+          />
+          <label for="GRAVEL">GRAVEL</label>
+
+          <input
+            type="radio"
+            value="ROAD"
+            id="ROAD"
+            onChange={() => setBike("ROAD")}
+            name="bike"
+          />
+          <label for="ROAD">ROAD</label>
+        </form>
+        <form>
+          <p>Water on Route</p>
+          <input
+            type="radio"
+            value="true"
+            id="true"
+            onChange={() => setBike(true)}
+            name="bike"
+          />
+          <label for="true">True</label>
+
+          <input
+            type="radio"
+            value="false"
+            id="false"
+            onChange={() => setBike(false)}
+            name="bike"
+          />
+          <label for="false">false</label>
+        </form>
+        <p>Description (max: 300 characters)</p>
+        <input type="text" value={description} onChange={e => setDescription(e.target.value)} />
+<button onClick={() => handleClick()}>Submit</button>
+        <div id="map"></div>
+      </div>
     </div>
   );
-};
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Upload);
+}

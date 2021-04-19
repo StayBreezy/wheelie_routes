@@ -7,8 +7,9 @@ import { HashRouter as Router } from "react-router-dom";
 import { createStore } from "redux";
 import allReducer from "./redux/store";
 import { Provider } from "react-redux";
+import store from './redux/store'
 
-const store = createStore(allReducer);
+// const store = createStore(allReducer);
 
 ReactDOM.render(
   <Provider store={store}>

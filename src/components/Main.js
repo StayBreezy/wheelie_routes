@@ -8,14 +8,14 @@ import Header from "./Header";
 import Upload from "./Upload";
 import Filter from "./Filter";
 import Footer from "./Footer";
-import RoutePage from "./RoutePage";
+import Route from "./RoutePage";
 
 function App() {
   return (
     <div>
       <Header />
       <Filter />
-      <RoutePage />
+      {/* <Route /> */}
       <Footer />
     </div>
   );

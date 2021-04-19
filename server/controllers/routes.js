@@ -5,14 +5,9 @@ module.exports = {
     return res.send(routes);
   },
   uploadRoute: async (req, res) => {
-    const {
-      gpx,
-      distance,
-      vertical_gain,
-      recommended_bike,
-      water,
-      shops,
-    } = req.body;
+    const { url, data, recommended_bike, water, shops, description } = req.body;
+    const {distanceI, vertical_gainI} = data
+    console.log({ url, data, recommended_bike, water, shops, description });
     const db = req.app.get("db");
     const { id } = req.session.user;
     const date_created = new Date();
@@ -20,16 +15,17 @@ module.exports = {
       return res.sendStatus(403);
     }
     await db.routes.post_new_route([
-      gpx,
-      distance,
-      vertical_gain,
+      url,
+      distanceI,
+      vertical_gainI,
       recommended_bike,
       water,
       shops,
       +id,
       date_created,
+      description,
     ]);
-
+    return res.sendStatus(200);
   },
   filterRoutes: async (req, res) => {
     const { string } = req.body;
@@ -60,10 +56,10 @@ module.exports = {
     db.routes.delete_route([route_id]);
     return res.sendStatus(200);
   },
-  getRoute: async (req, res) =>{
+  getRoute: async (req, res) => {
     const id = req.params;
     const db = req.app.get("db");
     const route = await db.search.get_route_by_id([id]);
     return res.send(route);
-  }
+  },
 };

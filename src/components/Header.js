@@ -4,7 +4,7 @@ import "../App.css";
 import { Link } from "react-router-dom";
 
 export default function Header(props){
-  const {profile_pic} = useSelector(state => state.userReducer)
+  const userState = useSelector(state => state.userReducer)
   return (
     <div className="header">
       <Link to="/" className="noLinkLink">
@@ -12,7 +12,7 @@ export default function Header(props){
       </Link>
       <nav className="nav">
         <p>Search</p>
-        <p>Upload</p>
+        <Link to="/upload"><p>Upload</p></Link>
         {/* if no user then link to auth. if user link to profile and profile button */}
         <Link to="/login">
           <p>login</p>

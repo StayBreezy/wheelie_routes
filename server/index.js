@@ -71,7 +71,7 @@ app.get("/api/auth/me", user.getUser);
 app.post("/api/auth/logout", user.logout);
 
 app.get("/api/getRoutes", routes.getAll);
-// app.post("/api/uploadRoute", routes.uploadRoute);
+app.post("/api/uploadRoute", routes.uploadRoute);
 app.get("/api/getFiltered", routes.filterRoutes);
 app.put("/api/editRoute", routes.editRoute);
 app.get("/api/getMyRoutes", routes.getMyRoutes);
