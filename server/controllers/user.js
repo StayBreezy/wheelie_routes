@@ -34,6 +34,7 @@ module.exports = {
       return res.status(403).send(`Username/Password doesn't match`);
     }
     req.session.user = {
+      id: user.user_id,
       username: user.username,
       password: user.password,
     };

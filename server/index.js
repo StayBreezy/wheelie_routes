@@ -4,9 +4,9 @@ const express = require("express"),
   session = require("express-session"),
   routes = require("./controllers/routes"),
   comments = require("./controllers/comments"),
-  pictures = require('./controllers/pictures')
+  pictures = require("./controllers/pictures"),
   user = require("./controllers/user"),
-  aws = require('aws-sdk');
+  aws = require("aws-sdk"),
   bcrypt = require("bcrypt");
 
 const app = express();
@@ -31,25 +31,25 @@ app.use(
   })
 );
 
-app.get('/api/signs3', (req, res) => {
+app.get("/api/signs3", (req, res) => {
   aws.config = {
-    region: 'us-east-2',
+    region: "us-east-2",
     accessKeyId: AWS_ACCESS_KEY_ID,
     secretAccessKey: AWS_SECRET_ACCESS_KEY,
   };
 
   const s3 = new aws.S3();
-  const fileName = req.query['file-name'];
-  const fileType = req.query['file-type'];
+  const fileName = req.query["file-name"];
+  const fileType = req.query["file-type"];
   const s3Params = {
     Bucket: S3_BUCKET,
     Key: fileName,
     Expires: 60,
     ContentType: fileType,
-    ACL: 'public-read',
+    ACL: "public-read",
   };
 
-  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+  s3.getSignedUrl("putObject", s3Params, (err, data) => {
     if (err) {
       console.log(err);
       return res.end();
@@ -63,7 +63,6 @@ app.get('/api/signs3', (req, res) => {
   });
 });
 
-
 // ENDPOINTS
 // HERE
 app.post("/api/auth/register", user.register);
@@ -72,7 +71,7 @@ app.get("/api/auth/me", user.getUser);
 app.post("/api/auth/logout", user.logout);
 
 app.get("/api/getRoutes", routes.getAll);
-app.post('/api/uploadRoute', routes.uploadRoute)
+// app.post("/api/uploadRoute", routes.uploadRoute);
 app.get("/api/getFiltered", routes.filterRoutes);
 app.put("/api/editRoute", routes.editRoute);
 app.get("/api/getMyRoutes", routes.getMyRoutes);
@@ -84,9 +83,7 @@ app.put("/api/editComment", comments.editComment);
 app.delete("/api/deleteComment", comments.deleteComment);
 
 app.get("api/getPictures/:route_id", pictures.getRoutePics);
-app.post('api/uploadPictures/:route_id', pictures.uploadRoutePics)
-
-
+app.post("api/uploadPictures/:route_id", pictures.uploadRoutePics);
 
 massive({
   connectionString: CONNECTION_STRING,

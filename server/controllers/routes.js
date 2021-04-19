@@ -4,8 +4,32 @@ module.exports = {
     const routes = await db.search.get_all_routes();
     return res.send(routes);
   },
-  uploadRoute: (req, res) => {
-    const {};
+  uploadRoute: async (req, res) => {
+    const {
+      gpx,
+      distance,
+      vertical_gain,
+      recommended_bike,
+      water,
+      shops,
+    } = req.body;
+    const db = req.app.get("db");
+    const { id } = req.session.user;
+    const date_created = new Date();
+    if (!id) {
+      return res.sendStatus(403);
+    }
+    await db.routes.post_new_route([
+      gpx,
+      distance,
+      vertical_gain,
+      recommended_bike,
+      water,
+      shops,
+      +id,
+      date_created,
+    ]);
+
   },
   filterRoutes: async (req, res) => {
     const { string } = req.body;
@@ -36,4 +60,10 @@ module.exports = {
     db.routes.delete_route([route_id]);
     return res.sendStatus(200);
   },
+  getRoute: async (req, res) =>{
+    const id = req.params;
+    const db = req.app.get("db");
+    const route = await db.search.get_route_by_id([id]);
+    return res.send(route);
+  }
 };

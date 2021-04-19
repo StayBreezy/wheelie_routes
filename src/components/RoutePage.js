@@ -1,11 +1,36 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import L from "leaflet";
+import "leaflet-gpx";
+import Header from "./Header";
 import { v4 as randomString } from "uuid";
+import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 
-export const Upload = (props) => {
+function Route(props) {
+  const {id} = props.match.params.id;
+  const [gpx, setGpx] = useState('')
+
+  axios.get(`/api/getRoute/${id}`)
+
+  useEffect(() => {
+    var map = L.map("map", {
+      zoomControl: false,
+      scrollWheelZoom: true,
+    });
+    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>',
+    }).addTo(map);
+     // URL to your GPX file or the GPX itself
+    new L.GPX(gpx, { async: true })
+      .on("loaded", function (e) {
+        map.fitBounds(e.target.getBounds());
+        console.log(e.target.get_distance() / 1000);
+      })
+      .addTo(map);
+  });
+
   const [isUploading, setUploading] = useState(false);
   const [url, setUrl] = useState("");
 
@@ -55,15 +80,22 @@ export const Upload = (props) => {
         }
       });
   };
-  return (
-    <div className="App">
-      <h1>Upload Route</h1>
-      <h1>{url}</h1>
-      <img src={url} alt="" width="450px" />
 
+  return (
+    <div>
+      <Header />
+      <div id="map" className="bigMap"></div>
+      <p>miles</p>
+      <p>vertical gain</p>
+      <p>elapsed time</p>
+      <p>recommended bike</p>
+      <p>water</p>
+      <p>shops</p>
+      <div>General recommendations</div>
+      <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}
-        accept=".gpx"
+        accept="image/*"
         multiple={false}
       >
         {({ getRootProps, getInputProps }) => (
@@ -93,9 +125,10 @@ export const Upload = (props) => {
       </Dropzone>
     </div>
   );
-};
+}
+
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Upload);
+export default Route;

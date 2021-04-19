@@ -4,8 +4,8 @@ import pictureReducer from "./pictureReducer";
 import userReducer from "./userReducer";
 
 const allReducers = combineReducers({
-  routes: routeReducer,
-  pictures: pictureReducer,
-  user: userReducer,
+  routeReducer,
+  pictureReducer,
+  userReducer,
 });
 export default allReducers;

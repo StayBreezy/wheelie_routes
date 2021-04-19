@@ -1,11 +1,40 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import '../App.css';
+
 
 export const Filter = (props) => {
     return (
-        <div>
-            <h3>filter</h3>
-            <button>radio button</button>
+        <div className="filter">
+            <h3>filter&search</h3>
+            <input></input>
+            <div>
+                <p>water</p>
+                <button>yes</button>
+                <button>no</button>
+            </div>
+            <div>
+                <p>shops</p>
+                <button>yes</button>
+                <button>no</button>
+            </div>
+            <div>
+                <p>water</p>
+                <button>yes</button>
+                <button>no</button>
+            </div>
+            <div>
+                <p>water</p>
+                <button>yes</button>
+                <button>no</button>
+            </div>
+            <div>
+                <p>water</p>
+                <button>yes</button>
+                <button>no</button>
+            </div>
+            <button>Clear Search</button>
+            <button>Search</button>
         </div>
     )
 }
