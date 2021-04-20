@@ -72,7 +72,7 @@ app.post("/api/auth/logout", user.logout);
 
 app.get("/api/getRoutes", routes.getAll);
 app.post("/api/uploadRoute", routes.uploadRoute);
-app.get("/api/getFiltered", routes.filterRoutes);
+app.post("/api/getFiltered", routes.filterRoutes);
 app.put("/api/editRoute", routes.editRoute);
 app.get("/api/getMyRoutes", routes.getMyRoutes);
 app.delete("/api/deleteRoute", routes.deleteRoute);

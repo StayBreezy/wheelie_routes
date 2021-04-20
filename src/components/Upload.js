@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import "../App.css";
 import "leaflet-gpx";
@@ -20,6 +20,7 @@ export default function Upload(props) {
   const [shops, setShops] = useState(false);
   const [success, setSuccess] = useState(false);
   const [description, setDescription] = useState("");
+  const state = useSelector(state => state.userReducer)
 
   const dispatch = useDispatch();
 
@@ -94,6 +95,7 @@ export default function Upload(props) {
 
   return (
     <div className="App">
+      {console.log(state.isLoggedIn)}
       <Header />
       <h1>Upload Route</h1>
       <Dropzone

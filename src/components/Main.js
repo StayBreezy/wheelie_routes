@@ -6,16 +6,21 @@ import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 import Header from "./Header";
 import Upload from "./Upload";
-import Filter from "./Filter";
+import AllRoutes from "./AllRoutes";
 import Footer from "./Footer";
 import Route from "./RoutePage";
 
-function App() {
+function App(props) {
+
+
+
+
   return (
     <div>
+      {console.log(props)}
+
       <Header />
-      <Filter />
-      {/* <Route /> */}
+      <AllRoutes />
       <Footer />
     </div>
   );

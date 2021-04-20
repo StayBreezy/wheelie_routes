@@ -7,7 +7,7 @@ import { GridLoader } from "react-spinners";
 import Header from "./components/Header";
 import routes from "./routes";
 import Upload from "./components/Upload";
-import Filter from "./components/Filter";
+// import Filter from "./components/Filter";
 import Footer from "./components/Footer";
 import RoutePage from "./components/RoutePage";
 

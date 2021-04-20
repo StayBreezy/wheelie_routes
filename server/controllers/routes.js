@@ -6,7 +6,7 @@ module.exports = {
   },
   uploadRoute: async (req, res) => {
     const { url, data, recommended_bike, water, shops, description } = req.body;
-    const {distanceI, vertical_gainI} = data
+    const { distanceI, vertical_gainI } = data;
     console.log({ url, data, recommended_bike, water, shops, description });
     const db = req.app.get("db");
     const { id } = req.session.user;
@@ -29,8 +29,10 @@ module.exports = {
   },
   filterRoutes: async (req, res) => {
     const { string } = req.body;
+    console.log(req.body)
     const db = req.app.get("db");
     const result = await db.query(string);
+    console.log(result)
     return res.send(result);
   },
   editRoute: async (req, res) => {
