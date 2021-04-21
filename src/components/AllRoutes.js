@@ -184,11 +184,11 @@ export default function AllRoutes(props) {
           return (
             <Link className="noLinkLink" to={`/route/${e.route_id}`}>
               <div className="route">
-                <h1>NAME</h1>
+                <h1>{e.name}</h1>
                 <div>
-                  <p>{e.distance}</p>
-                  <p>{e.vertical_gain}</p>
-                  <p>{e.recommended_bike}</p>
+                  <p>Distance: {e.distance}</p>
+                  <p>Vertical Gain:{e.vertical_gain}</p>
+                  <p>Recommended Bike: {e.recommended_bike}</p>
                   <p>{e.water}</p>
                   <p>{e.shops}</p>
                 </div>

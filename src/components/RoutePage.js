@@ -3,23 +3,28 @@ import L from "leaflet";
 import "leaflet-gpx";
 import Header from "./Header";
 import { v4 as randomString } from "uuid";
+import "../App.css"
 import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 
 export default function Route(props) {
-  const {id} = props.match.params.id;
+  const {id} = props.match.params;
   const [gpx, setGpx] = useState('');
   const [route, setRoute] = useState({})
 
-  axios.get(`/api/getRoute/${id}`)
+  useEffect(()=>{
+    axios.post(`/api/getRoute/${id}`)
     .then(res => {
-      setGpx(res.data.gpx);
-     setRoute(res.data)
+      setGpx(res.data[0].gpx);
+     setRoute(res.data[0].gpx)
     })
     .catch(err => console.log(err))
 
+  }, [])
+
   useEffect(() => {
+    if(gpx !== ""){
     var map = L.map("map", {
       zoomControl: false,
       scrollWheelZoom: true,
@@ -32,10 +37,10 @@ export default function Route(props) {
     new L.GPX(gpx, { async: true })
       .on("loaded", function (e) {
         map.fitBounds(e.target.getBounds());
-        console.log(e.target.get_distance() / 1000);
-      })
+            })
       .addTo(map);
-  });
+    }
+  }, [gpx]);
 
   const [isUploading, setUploading] = useState(false);
   const [url, setUrl] = useState("");
@@ -89,6 +94,9 @@ export default function Route(props) {
 
   return (
     <div>
+      {console.log(id)}
+      {console.log(gpx)}
+      {/* {console.log(routes)} */}
       <Header />
       <div id="map" className="bigMap"></div>
       <p>distance</p>

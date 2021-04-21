@@ -16,7 +16,7 @@ function App(props) {
 
 
   return (
-    <div>
+    <div className="mainApp">
       {console.log(props)}
 
       <Header />

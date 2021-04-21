@@ -75,6 +75,7 @@ app.post("/api/uploadRoute", routes.uploadRoute);
 app.post("/api/getFiltered", routes.filterRoutes);
 app.put("/api/editRoute", routes.editRoute);
 app.get("/api/getMyRoutes", routes.getMyRoutes);
+app.post('/api/getRoute/:id', routes.getRoute)
 app.delete("/api/deleteRoute", routes.deleteRoute);
 
 app.get("/api/getComments", comments.getAll);

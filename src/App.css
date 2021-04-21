@@ -1,5 +1,6 @@
-.App {
+.mainApp {
   text-align: center;
+  width: 100vw;
 }
 
 .header {
@@ -16,11 +17,6 @@
   justify-content: space-between;
 }
 
-.filter {
-border: 1px solid black;
-width: 15%;
-}
-
 .bigMap {
   height: 50vh;
   width: 75vw;
@@ -29,4 +25,31 @@ width: 15%;
 #map {
   height: 100px;
   width: 100px;
+}
+
+.body {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter {
+  border: 1px solid black;
+  width: 15%;
+}
+
+.allRoutes {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: ; */
+}
+
+.route {
+  margin-left:10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border: 1px solid black;
+  width: 250px;
+  height: 250px;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import L from "leaflet";
 import "../App.css";
 import "leaflet-gpx";
@@ -19,32 +20,12 @@ export default function Upload(props) {
   const [water, setWater] = useState(false);
   const [shops, setShops] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
   const state = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  useEffect(() => {
-    setUploaded(true);
-    if (url != "") {
-      var map = L.map("map");
-      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>',
-      }).addTo(map);
-      new L.GPX(url, { async: true })
-        .on("loaded", function (e) {
-          map.fitBounds(e.target.getBounds());
-          setData({
-            distanceM: e.target.get_distance() / 1000,
-            vertical_gainM: e.target.get_elevation_gain(),
-            distanceI: e.target.get_distance_imp(),
-            vertical_gainI: e.target.get_elevation_gain_imp(),
-          });
-        })
-        .addTo(map);
-    }
-  }, [url]);
   const getSignedRequest = ([file]) => {
     setUploading(true);
 
@@ -78,7 +59,7 @@ export default function Upload(props) {
       .then((response) => {
         setUploading(false);
         setUrl(url);
-        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+        initMap(url);
       })
       .catch((err) => {
         setUploading(false);
@@ -88,17 +69,49 @@ export default function Upload(props) {
 
   function handleClick() {
     axios
-      .post("/api/uploadroute", { url, data, recommended_bike, water, shops, description })
-      .then((res) => setSuccess(true))
+      .post("/api/uploadroute", {
+        url,
+        data,
+        recommended_bike,
+        water,
+        shops,
+        name,
+      })
+      .then((res) => {
+        setSuccess(true);
+        history.push(`/route/${res.data[0].route_id}`)
+      })
       .catch((err) => console.log(err));
+  }
+
+  function initMap(url) {
+    var map = L.map("map");
+    console.log(url);
+    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>',
+    }).addTo(map);
+    new L.GPX(url, { async: true })
+      .on("loaded", function (e) {
+        map.fitBounds(e.target.getBounds());
+        setData({
+          distanceM: parseFloat(e.target.get_distance() / 1000).toFixed(2),
+          vertical_gainM: parseFloat(e.target.get_elevation_gain()).toFixed(0),
+          distanceI: parseFloat(e.target.get_distance_imp()).toFixed(2),
+          vertical_gainI: parseFloat(e.target.get_elevation_gain_imp()).toFixed(
+            0
+          ),
+        });
+      })
+      .addTo(map);
   }
 
   return (
     <div className="App">
-      {console.log(recommended_bike)}
+      {/* {console.log(recommended_bike)} */}
       {console.log()}
       {console.log()}
-      {console.log(state.isLoggedIn)}
+      {/* {console.log(state.isLoggedIn)} */}
       <Header />
       <h1>Step 1: Upload Route</h1>
       <Dropzone
@@ -125,13 +138,13 @@ export default function Upload(props) {
             <input {...getInputProps()} />
             {isUploading ? (
               <GridLoader />
-              ) : (
-                <p>Drop files here, or click to select files</p>
-                )}
+            ) : (
+              <p>Drop files here, or click to select files</p>
+            )}
           </div>
         )}
       </Dropzone>
-        <div id="map"></div>
+      <div id="map"></div>
       <div>
         <h1>Step 2: Info on Route</h1>
         <p>{`Distance(miles/kilometers): ${data.distanceI}/${data.distanceM}`}</p>
@@ -205,9 +218,18 @@ export default function Upload(props) {
           />
           <label for="false">No</label>
         </form>
-        {/* <p>Description (max: 300 characters)</p>
-        <input type="text" value={description} onChange={e => setDescription(e.target.value)} /> */}
-        <h1>Step 3:<button className="submitBtn" onClick={() => handleClick()}>Submit</button></h1>
+        <p>Name Route</p>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <h1>
+          Step 3:
+          <button className="submitBtn" onClick={() => handleClick()}>
+            Submit
+          </button>
+        </h1>
       </div>
     </div>
   );

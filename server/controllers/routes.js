@@ -5,16 +5,16 @@ module.exports = {
     return res.send(routes);
   },
   uploadRoute: async (req, res) => {
-    const { url, data, recommended_bike, water, shops, description } = req.body;
+    const { url, data, recommended_bike, water, shops, name } = req.body;
     const { distanceI, vertical_gainI } = data;
-    console.log({ url, data, recommended_bike, water, shops, description });
+    console.log({ url, data, recommended_bike, water, shops, name });
     const db = req.app.get("db");
     const { id } = req.session.user;
     const date_created = new Date();
     if (!id) {
       return res.sendStatus(403);
     }
-    await db.routes.post_new_route([
+    const route = await db.routes.post_new_route([
       url,
       distanceI,
       vertical_gainI,
@@ -23,9 +23,9 @@ module.exports = {
       shops,
       +id,
       date_created,
-      description,
+      name,
     ]);
-    return res.sendStatus(200);
+    return res.status(200).send(route);
   },
   filterRoutes: async (req, res) => {
     const { string } = req.body;
@@ -59,7 +59,7 @@ module.exports = {
     return res.sendStatus(200);
   },
   getRoute: async (req, res) => {
-    const id = req.params;
+    const {id} = req.params;
     const db = req.app.get("db");
     const route = await db.search.get_route_by_id([id]);
     return res.send(route);
