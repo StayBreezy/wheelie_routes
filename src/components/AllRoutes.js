@@ -131,7 +131,7 @@ export default function AllRoutes(props) {
             onChange={() => setMtb(!mtb)}
             name="bike"
           />
-          <label for="MTB">MTB</label>
+          <label for="MTB">Mtb</label>
 
           <input
             type="checkbox"
@@ -140,7 +140,7 @@ export default function AllRoutes(props) {
             onChange={() => setGravel(!gravel)}
             name="bike"
           />
-          <label for="GRAVEL">GRAVEL</label>
+          <label for="GRAVEL">Gravel</label>
 
           <input
             type="checkbox"
@@ -149,7 +149,7 @@ export default function AllRoutes(props) {
             onChange={() => setRoad(!road)}
             name="bike"
           />
-          <label for="ROAD">ROAD</label>
+          <label for="ROAD">Road</label>
         </form>
         <div>
           <input
