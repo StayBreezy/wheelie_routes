@@ -18,13 +18,17 @@
 }
 
 .bigMap {
+  margin: 0 auto;
   height: 50vh;
-  width: 75vw;
+  width: 50vw;
+  /* box-shadow: 5px 10px, 10px; */
+  box-shadow: 0px 0px 19px -16px rgba(0,0,0,1);
+  border-radius:1%;
 }
 
 #map {
-  height: 100px;
-  width: 100px;
+  height: 100%;
+  width: 100%;
 }
 
 .body {
@@ -36,6 +40,11 @@
 .filter {
   border: 1px solid black;
   width: 15%;
+}
+
+.noLinkLink {
+  text-decoration: none;
+  color: black;
 }
 
 .allRoutes {
@@ -52,4 +61,10 @@
   border: 1px solid black;
   width: 250px;
   height: 250px;
+}
+
+.vars {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 autol
 }
