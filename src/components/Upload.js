@@ -7,20 +7,20 @@ import axios from "axios";
 import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
-import Header from './Header';
+import Header from "./Header";
 
 export default function Upload(props) {
   const [isUploading, setUploading] = useState(false);
   const [url, setUrl] = useState("");
   const [uploaded, setUploaded] = useState(false);
   const [data, setData] = useState({});
-  const [bike, setBike] = useState("");
+  const [recommended_bike, setBike] = useState("");
   const [map, setMap] = useState("");
   const [water, setWater] = useState(false);
   const [shops, setShops] = useState(false);
   const [success, setSuccess] = useState(false);
   const [description, setDescription] = useState("");
-  const state = useSelector(state => state.userReducer)
+  const state = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
 
@@ -88,16 +88,19 @@ export default function Upload(props) {
 
   function handleClick() {
     axios
-      .post("/api/uploadroute", { url, data, bike, water, shops, description })
+      .post("/api/uploadroute", { url, data, recommended_bike, water, shops, description })
       .then((res) => setSuccess(true))
       .catch((err) => console.log(err));
   }
 
   return (
     <div className="App">
+      {console.log(recommended_bike)}
+      {console.log()}
+      {console.log()}
       {console.log(state.isLoggedIn)}
       <Header />
-      <h1>Upload Route</h1>
+      <h1>Step 1: Upload Route</h1>
       <Dropzone
         onDropAccepted={getSignedRequest}
         accept=".gpx"
@@ -122,15 +125,17 @@ export default function Upload(props) {
             <input {...getInputProps()} />
             {isUploading ? (
               <GridLoader />
-            ) : (
-              <p>Drop files here, or click to select files</p>
-            )}
+              ) : (
+                <p>Drop files here, or click to select files</p>
+                )}
           </div>
         )}
       </Dropzone>
+        <div id="map"></div>
       <div>
-        <p>{`Distance(ft/m): ${data.distanceI}/${data.distanceM}`}</p>
-        <p>{`Vertical Gain(ft/m): ${data.vertical_gainI}/${data.vertical_gainM}`}</p>
+        <h1>Step 2: Info on Route</h1>
+        <p>{`Distance(miles/kilometers): ${data.distanceI}/${data.distanceM}`}</p>
+        <p>{`Vertical Gain(feet/meters): ${data.vertical_gainI}/${data.vertical_gainM}`}</p>
         <form>
           <p>Recommended Bike</p>
           <input
@@ -166,24 +171,43 @@ export default function Upload(props) {
             type="radio"
             value="true"
             id="true"
-            onChange={() => setBike(true)}
+            onChange={() => setWater(true)}
             name="bike"
           />
-          <label for="true">True</label>
+          <label for="true">Yes</label>
 
           <input
             type="radio"
             value="false"
             id="false"
-            onChange={() => setBike(false)}
+            onChange={() => setWater(false)}
             name="bike"
           />
-          <label for="false">false</label>
+          <label for="false">No</label>
         </form>
-        <p>Description (max: 300 characters)</p>
-        <input type="text" value={description} onChange={e => setDescription(e.target.value)} />
-<button onClick={() => handleClick()}>Submit</button>
-        <div id="map"></div>
+        <form>
+          <p>Shops on Route</p>
+          <input
+            type="radio"
+            value="true"
+            id="true"
+            onChange={() => setShops(true)}
+            name="bike"
+          />
+          <label for="true">Yes</label>
+
+          <input
+            type="radio"
+            value="false"
+            id="false"
+            onChange={() => setShops(false)}
+            name="bike"
+          />
+          <label for="false">No</label>
+        </form>
+        {/* <p>Description (max: 300 characters)</p>
+        <input type="text" value={description} onChange={e => setDescription(e.target.value)} /> */}
+        <h1>Step 3:<button className="submitBtn" onClick={() => handleClick()}>Submit</button></h1>
       </div>
     </div>
   );
