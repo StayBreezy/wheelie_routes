@@ -89,18 +89,13 @@ export default function AllRoutes(props) {
     }
   }
 
-  function handleClear() {
-    setMtb(false);
-    setGravel(false);
-    setRoad(false);
-    setWater(false);
-    setShops(false);
-  }
-
-  function filterBike(bike) {
-    setFilter(filteredRoutes.filter((e) => e.recommended_bike === bike));
-  }
-
+  const isTrue = (thing) => {
+    if (thing) {
+      return "Yes";
+    } else {
+      return "No";
+    }
+  };
   // search false show {routes}
   // search true show {filteredRoutes}
 
@@ -110,7 +105,7 @@ export default function AllRoutes(props) {
       {console.log(mtb)}
       {console.log(filteredRoutes)}
       <div className="filter">
-        <h3>filter</h3>
+        <h3>Route Filters: </h3>
         {/* <input></input> */}
         {/* <div>
           <p>distance</p>
@@ -159,7 +154,7 @@ export default function AllRoutes(props) {
             onChange={() => setWater(!water)}
             name="water"
           />
-          <label for="WATER">Has water on route</label>
+          <label for="WATER">Has water?</label>
         </div>
         <div>
           <input
@@ -169,14 +164,8 @@ export default function AllRoutes(props) {
             onChange={() => setShops(!shops)}
             name="SHOPS"
           />
-          <label for="SHOPS">Has shops on route</label>
+          <label for="SHOPS">Has shops?</label>
         </div>
-        <div>
-          <p>water</p>
-          <button>yes</button>
-          <button>no</button>
-        </div>
-        <button onClick={() => handleClear()}>Clear Search</button>
         <button onClick={() => handleSubmit()}>Search</button>
       </div>
       <div className="allRoutes">
@@ -185,12 +174,14 @@ export default function AllRoutes(props) {
             <Link className="noLinkLink" to={`/route/${e.route_id}`}>
               <div className="route">
                 <h1>{e.name}</h1>
-                <div>
+                <div className="vars">
                   <p>Distance: {e.distance}</p>
                   <p>Vertical Gain:{e.vertical_gain}</p>
+                </div>
+                <div className="vars">
                   <p>Recommended Bike: {e.recommended_bike}</p>
-                  <p>{e.water}</p>
-                  <p>{e.shops}</p>
+                  <p>Water: {isTrue(e.water)}</p>
+                  <p>Shops: {isTrue(e.shops)}</p>
                 </div>
               </div>
             </Link>

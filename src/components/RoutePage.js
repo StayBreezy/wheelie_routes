@@ -3,42 +3,42 @@ import L from "leaflet";
 import "leaflet-gpx";
 import Header from "./Header";
 import { v4 as randomString } from "uuid";
-import "../App.css"
+import "../App.css";
 import axios from "axios";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 
 export default function Route(props) {
-  const {id} = props.match.params;
-  const [gpx, setGpx] = useState('');
-  const [route, setRoute] = useState({})
-
-  useEffect(()=>{
-    axios.post(`/api/getRoute/${id}`)
-    .then(res => {
-      setGpx(res.data[0].gpx);
-     setRoute(res.data[0].gpx)
-    })
-    .catch(err => console.log(err))
-
-  }, [])
+  const { id } = props.match.params;
+  const [gpx, setGpx] = useState("");
+  const [route, setRoute] = useState({});
 
   useEffect(() => {
-    if(gpx !== ""){
-    var map = L.map("map", {
-      zoomControl: false,
-      scrollWheelZoom: true,
-    });
-    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>',
-    }).addTo(map);
-     // URL to your GPX file or the GPX itself
-    new L.GPX(gpx, { async: true })
-      .on("loaded", function (e) {
-        map.fitBounds(e.target.getBounds());
-            })
-      .addTo(map);
+    axios
+      .post(`/api/getRoute/${id}`)
+      .then((res) => {
+        setGpx(res.data[0].gpx);
+        setRoute(res.data[0]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (gpx !== "") {
+      var map = L.map("map", {
+        zoomControl: false,
+        scrollWheelZoom: true,
+      });
+      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>',
+      }).addTo(map);
+      // URL to your GPX file or the GPX itself
+      new L.GPX(gpx, { async: true })
+        .on("loaded", function (e) {
+          map.fitBounds(e.target.getBounds());
+        })
+        .addTo(map);
     }
   }, [gpx]);
 
@@ -92,20 +92,30 @@ export default function Route(props) {
       });
   };
 
+  const isTrue = (thing) => {
+    if (thing) {
+      return "Yes";
+    } else {
+      return "No";
+    }
+  };
+
   return (
     <div>
       {console.log(id)}
-      {console.log(gpx)}
+      {console.log(route)}
       {/* {console.log(routes)} */}
       <Header />
-      <div id="map" className="bigMap"></div>
-      <p>distance</p>
-      <p>vertical gain</p>
-      <p>elapsed time</p>
-      <p>recommended bike</p>
-      <p>water</p>
-      <p>shops</p>
-      <div>General recommendations</div>
+      <h1>{route.name}</h1>
+      <div className="bigMap">
+        <div id="map" className="bigMap"></div>
+      </div>
+      <p>Distance: {route.distance}</p>
+      <p>Vertical Gain: {route.vertical_gain}</p>
+      <p>Recommended Bike: {route.recommended_bike}</p>
+      <p>Water: {isTrue(route.water)}</p>
+      <p>Shops: {isTrue(route.shops)}</p>
+      {/* <div>General recommendations</div> */}
       <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}

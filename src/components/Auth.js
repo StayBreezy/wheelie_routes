@@ -28,7 +28,7 @@ function Auth(props) {
       .post("/api/auth/login", { username, password })
       .then((res) => {
         props.history.push("/");
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(updateUser(res.data));
       })
       .catch((err) => {

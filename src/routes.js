@@ -11,7 +11,7 @@ export default (
   <Switch>
     <Route exact path="/" component={Main} />
     <Route path="/login" component={Auth} />
-    <Route path="/profile" component={Profile} />
+    <Route path="/profile/:username" component={Profile} />
     <Route path="/route/:id" component={RoutePage} />
     <Route path="/upload" component={Upload} />
   </Switch>

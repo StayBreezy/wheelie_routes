@@ -47,9 +47,10 @@ module.exports = {
     return res.send(route);
   },
   getMyRoutes: async (req, res) => {
-    const { user_id } = req.body;
+    const {id} = req.body;
+    console.log(id)
     const db = req.app.get("db");
-    const routes = await db.search.get_my_routes([user_id]);
+    const routes = await db.search.get_my_routes([id]);
     return res.send(routes);
   },
   deleteRoute: (req, res) => {
