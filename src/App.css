@@ -3,10 +3,22 @@
   width: 100vw;
 }
 
+html {
+  background-color: grey;
+padding: 0;
+margin: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
-  margin-left: 35px;
-  padding-right: 10px;
+  /* margin-left: 35px; */
+  /* padding-right: 10px; */
+  width: 100vw;
   height: 80px;
+  background-color: white;
   display: flex;
   justify-content: space-between;
 }
@@ -41,6 +53,7 @@
 .filter {
   border: 1px solid black;
   margin: 0 auto;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,6 +80,7 @@
 }
 
 .route {
+  background-color: white;
   margin-left:10px;
   margin-right: 10px;
   margin-top: 10px;
