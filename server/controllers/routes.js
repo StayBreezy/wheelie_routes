@@ -29,10 +29,10 @@ module.exports = {
   },
   filterRoutes: async (req, res) => {
     const { string } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     const db = req.app.get("db");
     const result = await db.query(string);
-    console.log(result)
+    console.log(result);
     return res.send(result);
   },
   editRoute: async (req, res) => {
@@ -47,8 +47,8 @@ module.exports = {
     return res.send(route);
   },
   getMyRoutes: async (req, res) => {
-    const {id} = req.body;
-    console.log(id)
+    const { id } = req.body;
+    console.log(id);
     const db = req.app.get("db");
     const routes = await db.search.get_my_routes([id]);
     return res.send(routes);
@@ -60,7 +60,7 @@ module.exports = {
     return res.sendStatus(200);
   },
   getRoute: async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const db = req.app.get("db");
     const route = await db.search.get_route_by_id([id]);
     return res.send(route);

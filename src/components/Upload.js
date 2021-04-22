@@ -139,12 +139,12 @@ export default function Upload(props) {
             {isUploading ? (
               <GridLoader />
             ) : (
-              <p>Drop files here, or click to select files</p>
+              <p>Drop your .gpx here, or click to open file.</p>
             )}
           </div>
         )}
       </Dropzone>
-      <div id="map"></div>
+      <div id="map" className="bigMap"></div>
       <div>
         <h1>Step 2: Info on Route</h1>
         <p>{`Distance(miles/kilometers): ${data.distanceI}/${data.distanceM}`}</p>

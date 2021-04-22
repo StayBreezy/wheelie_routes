@@ -5,7 +5,7 @@ module.exports = {
     return res.send(comments);
   },
   post: async (req, res) => {
-    const { user_id, route_id, trail_conditions, comment } = req.body;
+    const { user_id, route_id, comment } = req.body;
     const db = req.app.get("db");
     const comments = await db.comments.post_comment([
       user_id,

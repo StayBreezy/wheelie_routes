@@ -13,6 +13,7 @@ export default function AllRoutes(props) {
   const [road, setRoad] = useState(false);
   const [water, setWater] = useState(false);
   const [shops, setShops] = useState(false);
+  const [miles, setMiles] = useState(true);
   // const [submit, setSubmit] = useState(false)
 
   //   const routes = useSelector()
@@ -57,7 +58,7 @@ export default function AllRoutes(props) {
     } else if (mtb && !gravel && road) {
       setFilter(
         routes.filter((e) => {
-          return e.recommended_bike === "ROAD" && e.recommended_bike === "MTB";
+          return e.recommended_bike === "ROAD" || e.recommended_bike === "MTB";
         })
       );
     } else if (!mtb && gravel && road) {
@@ -68,7 +69,8 @@ export default function AllRoutes(props) {
           );
         })
       );
-    } else if (water && shops) {
+    }
+    if (water && shops) {
       setFilter(
         filteredRoutes.filter((e) => {
           return e.water === water && e.shops === shops;
@@ -96,6 +98,22 @@ export default function AllRoutes(props) {
       return "No";
     }
   };
+
+  const mileSwitch = () =>{
+    if(miles){
+      return "mi"
+    }else{
+      return "km"
+    }
+  }
+
+  const feetSwitch = () =>{
+    if(miles){
+      return "ft"
+    }else {
+      return "m"
+    }
+  }
   // search false show {routes}
   // search true show {filteredRoutes}
 
@@ -173,15 +191,19 @@ export default function AllRoutes(props) {
           return (
             <Link className="noLinkLink" to={`/route/${e.route_id}`}>
               <div className="route">
-                <h1>{e.name}</h1>
+                <div className="routeNameDiv">
+                <h1 className="routeName">{e.name}</h1>
+                </div>
+                <div className="routeInfo">
                 <div className="vars">
-                  <p>Distance: {e.distance}</p>
-                  <p>Vertical Gain:{e.vertical_gain}</p>
+                  <p>Distance: {e.distance}{mileSwitch()}</p>
+                  <p>Vertical Gain:{e.vertical_gain}{feetSwitch()}</p>
                 </div>
                 <div className="vars">
                   <p>Recommended Bike: {e.recommended_bike}</p>
                   <p>Water: {isTrue(e.water)}</p>
                   <p>Shops: {isTrue(e.shops)}</p>
+                </div>
                 </div>
               </div>
             </Link>

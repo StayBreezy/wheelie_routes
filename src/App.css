@@ -2,11 +2,31 @@ html {
   background-color: rgba(128, 128, 128, 0.219);
   padding: 0;
   margin: 0;
+  text-align: center;
+  font-family: 'Oxygen', sans-serif;
 }
 body {
   margin: 0;
   padding: 0;
 }
+
+/*
+.routeH1 {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+} */
+
+  .routePageH1 {
+    width: 75vw;
+    margin: 0 auto;
+    margin-top:12px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
 
 .header {
   /* margin-left: 35px; */
@@ -20,6 +40,26 @@ body {
   /* margin-left: 20px; */
   justify-content: space-between;
   z-index: 1;
+}
+
+.routePageInfo {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 75vw;
+  height:27vh;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+.routePageInfoInfo {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 10px;
+  margin-top: 0px;
+}
+.routePageInfo > h2 {
+  margin-bottom: 0px;
 }
 
 .mainHeader {
@@ -45,7 +85,7 @@ body {
   }
 }
 .nav {
-  width: 30vw;
+  width: 25vw;
   display: flex;
   justify-content: space-between;
   animation-name: slide;
@@ -62,13 +102,15 @@ body {
 }
 
 .navLinks {
+  border-radius: 8%;
+  width: 25vw;
+  height: 200px;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-}
-
-nav {
-  background-color: white;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.973);
 }
 
 .navBig {
@@ -87,7 +129,7 @@ nav {
 .bigMap {
   margin: 0 auto;
   height: 50vh;
-  width: 50vw;
+  width: 75vw;
   /* box-shadow: 5px 10px, 10px; */
   box-shadow: 0px 0px 19px -16px rgba(0, 0, 0, 1);
   border-radius: 1%;
@@ -162,14 +204,14 @@ nav {
 .vars {
   display: flex;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 3px 10px 0px 10px;
 }
 
 .pLink {
   cursor: pointer;
 }
 
-@media (min-width: 650px) {
+@media (min-width: 1110px) {
   html {
     background-color: rgba(128, 128, 128, 0.219);
     padding: 0;
@@ -178,6 +220,12 @@ nav {
   body {
     margin: 0;
     padding: 0;
+  }
+
+  .navLinks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .menuBtn {
@@ -190,7 +238,7 @@ nav {
     width: 100vw;
     height: 80px;
     background-color: white;
-    box-shadow: 0px -22px 100px 50px rgba(255, 255, 255, 1);
+    box-shadow: 0px -22px 100px 10px rgba(255, 255, 255, 1);
     display: flex;
     justify-content: space-between;
   }
@@ -198,6 +246,7 @@ nav {
   .nav {
     width: 15vw;
     display: flex;
+    padding-right: 20px;
     justify-content: space-between;
   }
 
@@ -211,8 +260,8 @@ nav {
   }
 
   #map {
-    height: 100%;
-    width: 100%;
+    height: 50vh;
+    width: 50vw;
   }
 
   .body {
@@ -230,12 +279,17 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 31%;
+    width: 34%;
   }
 
+  .routeNameDiv {
+    height: 50%;
+    margin: 0 auto;
+  }
   .routeInfo {
     /* display: flex; */
     /* flex-direction: column; */
+    height: 50%;
     position: relative;
     bottom: 10px;
   }
@@ -278,7 +332,7 @@ nav {
   .vars {
     display: flex;
     justify-content: space-between;
-    margin: 0 auto;
+    margin: 3px 10px 0px 10px;
   }
 
   .pLink {

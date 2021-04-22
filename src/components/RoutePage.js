@@ -12,6 +12,7 @@ export default function Route(props) {
   const { id } = props.match.params;
   const [gpx, setGpx] = useState("");
   const [route, setRoute] = useState({});
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     axios
@@ -106,17 +107,24 @@ export default function Route(props) {
       {console.log(route)}
       {/* {console.log(routes)} */}
       <Header />
-      <h1>{route.name}</h1>
+      <div className="routeH1">
+      <h1 className="routePageH1">{route.name}</h1>
+      </div>
       <div className="bigMap">
         <div id="map" className="bigMap"></div>
       </div>
-      <p>Distance: {route.distance}</p>
-      <p>Vertical Gain: {route.vertical_gain}</p>
+      <div className="routePageInfo">
+        <h2>Route Info:</h2>
+        <div className="routePageInfoInfo">
+      <p>Distance: {route.distance}mi</p>
+      <p>Vertical Gain: {route.vertical_gain}ft</p>
       <p>Recommended Bike: {route.recommended_bike}</p>
       <p>Water: {isTrue(route.water)}</p>
       <p>Shops: {isTrue(route.shops)}</p>
+        </div>
+      </div>
       {/* <div>General recommendations</div> */}
-      <h3>Add imgs</h3>
+      {/* <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}
         accept="image/*"
@@ -146,7 +154,17 @@ export default function Route(props) {
             )}
           </div>
         )}
-      </Dropzone>
+      </Dropzone> */}
+      {/* <div className="comments">
+        <h2>Comments</h2>
+        {comments.map(e => {
+          return
+          <div className="comment">
+            <p>{e.comment}</p>
+            <p>{e.user_id}</p>
+          </div> */}
+        {/* })} */}
+      {/* </div> */}
     </div>
   );
 }
