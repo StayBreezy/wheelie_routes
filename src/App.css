@@ -9,7 +9,10 @@ body {
   margin: 0;
   padding: 0;
 }
-
+.commentInput {
+  height: 120px;
+  width: 200px;
+}
 /*
 .routeH1 {
   display: flex;
@@ -27,6 +30,25 @@ body {
   margin-bottom: 12px;
   text-align: center;
 }
+.commentSec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.postBtn {
+  width: 50px;
+}
+.noPostBtn {
+  display: none;
+}
+
+.noDisplay {
+  display: none;
+}
+
 
 .header {
   /* margin-left: 35px; */
@@ -138,6 +160,7 @@ body {
 #map {
   height: 100%;
   width: 100%;
+  z-index: 0;
 }
 
 .body {
@@ -262,6 +285,7 @@ body {
   #map {
     height: 50vh;
     width: 50vw;
+    z-index: 0;
   }
 
   .body {
@@ -329,6 +353,27 @@ body {
     height: 250px;
   }
 
+  .commentInput {
+    height: 120px;
+    width: 500px;
+  }
+
+  .commentSec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    margin: 0 auto;
+    margin-bottom: 200px;
+  }
+
+  .postBtn {
+    width: 50px;
+  }
+  .noPostBtn {
+    display: none;
+  }
+
   .vars {
     display: flex;
     justify-content: space-between;
@@ -338,4 +383,8 @@ body {
   .pLink {
     cursor: pointer;
   }
+}
+
+.noDisplay {
+  display: none;
 }

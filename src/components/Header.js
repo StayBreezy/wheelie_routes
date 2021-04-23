@@ -12,7 +12,7 @@ export default function Header(props) {
 
   const handleClick = () => {
     if (!userState.isLoggedIn) {
-      alert("Login to upload");
+      alert("Must be logged in to upload");
     } else {
       history.push("/upload");
     }

@@ -54,7 +54,8 @@ module.exports = {
     return res.send(routes);
   },
   deleteRoute: (req, res) => {
-    const { route_id } = req.body;
+    const { route_id } = req.params;
+    console.log(route_id)
     const db = req.app.get("db");
     db.routes.delete_route([route_id]);
     return res.sendStatus(200);
@@ -65,4 +66,9 @@ module.exports = {
     const route = await db.search.get_route_by_id([id]);
     return res.send(route);
   },
+  editRouteName: async(req, res)=>{
+    const {route_id, nameChange} = req.body;
+    const db = req.app.get("db");
+    const route = await db.routes.update_route_name([nameChange, route_id]);
+    return res.send(route); }
 };

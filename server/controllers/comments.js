@@ -1,7 +1,8 @@
 module.exports = {
   getAll: async (req, res) => {
+    const {route_id} = req.body;
     const db = req.app.get("db");
-    const comments = await db.comments.get_all_comments();
+    const comments = await db.comments.get_all_comments([route_id]);
     return res.send(comments);
   },
   post: async (req, res) => {
@@ -10,7 +11,6 @@ module.exports = {
     const comments = await db.comments.post_comment([
       user_id,
       route_id,
-      trail_conditions,
       comment,
     ]);
     return res.send(comments);
@@ -20,7 +20,6 @@ module.exports = {
     const db = req.app.get("db");
     const comments = await db.comments.edit_comment([
       comment_id,
-      trail_conditions,
       comment,
     ]);
     return res.send(comments);

@@ -74,12 +74,12 @@ app.post("/api/auth/logout", user.logout);
 app.get("/api/getRoutes", routes.getAll);
 app.post("/api/uploadRoute", routes.uploadRoute);
 app.post("/api/getFiltered", routes.filterRoutes);
-app.put("/api/editRoute", routes.editRoute);
+app.put("/api/editRouteName", routes.editRouteName);
 app.post("/api/getMyRoutes", routes.getMyRoutes);
 app.post('/api/getRoute/:id', routes.getRoute)
-app.delete("/api/deleteRoute", routes.deleteRoute);
+app.delete("/api/deleteRoute/:route_id", routes.deleteRoute);
 
-app.get("/api/getComments", comments.getAll);
+app.post("/api/getComments", comments.getAll);
 app.post("/api/postComment", comments.post);
 app.put("/api/editComment", comments.editComment);
 app.delete("/api/deleteComment", comments.deleteComment);
