@@ -10,6 +10,7 @@ const express = require("express"),
   bcrypt = require("bcrypt");
 
 const app = express();
+app.use(express.static(`${__dirname}/../build`))
 app.use(express.json());
 const {
   SERVER_PORT,
