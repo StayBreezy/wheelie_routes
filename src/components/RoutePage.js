@@ -151,32 +151,34 @@ export default function Route(props) {
       <div className="routeH1">
         <h1 className="routePageH1">{route.name}</h1>
       </div>
+      <div className="routePage">
+
       <div className="bigMap">
-        <div id="map" className="bigMap"></div>
+        <div id="map"></div>
+        <button
+          onClick={() => handleEdit()}
+          className={userState.id === route.user_id ? "deleteBtn" : "noDisplay"}
+          >
+          Edit
+        </button>
+        <input
+          type="text"
+          onChange={(e) => setNameChange(e.target.value)}
+          className={isEditing ? "" : "noDisplay"}
+          />
+        <button
+          className={isEditing ? "" : "noDisplay"}
+          onClick={() => handleSubmitEdit()}
+          >
+          Submit
+        </button>
+        <button
+          className={userState.id === route.user_id ? "deleteBtn" : "noDisplay"}
+          onClick={() => handleDelete()}
+          >
+          DELETE
+        </button>
       </div>
-      <button
-        onClick={() => handleEdit()}
-        className={userState.id === route.user_id ? "deleteBtn" : "noDisplay"}
-      >
-        Edit
-      </button>
-      <input
-        type="text"
-        onChange={(e) => setNameChange(e.target.value)}
-        className={isEditing ? "" : "noDisplay"}
-      />
-      <button
-        className={isEditing ? "" : "noDisplay"}
-        onClick={() => handleSubmitEdit()}
-      >
-        Submit
-      </button>
-      <button
-        className={userState.id === route.user_id ? "deleteBtn" : "noDisplay"}
-        onClick={() => handleDelete()}
-      >
-        DELETE
-      </button>
       <div className="routePageInfo">
         <h2>Route Info:</h2>
         <div className="routePageInfoInfo">
@@ -186,6 +188,7 @@ export default function Route(props) {
           <p>Water: {isTrue(route.water)}</p>
           <p>Shops: {isTrue(route.shops)}</p>
         </div>
+      </div>
       </div>
       {/* <div>
         <h2>Comments:</h2>

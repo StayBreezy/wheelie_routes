@@ -48,7 +48,10 @@ body {
 .noDisplay {
   display: none;
 }
-
+/*
+.routePage {
+  display: flex;
+} */
 
 .header {
   /* margin-left: 35px; */
@@ -83,6 +86,7 @@ body {
 .routePageInfo > h2 {
   margin-bottom: 0px;
 }
+
 
 .mainHeader {
   position: relative;
@@ -266,6 +270,27 @@ body {
     justify-content: space-between;
   }
 
+  .routePageInfo {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 20vw;
+    height: 40vh;
+    margin: 0 auto;
+    margin-top: 5px;
+  }
+  .routePageInfoInfo {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 10px;
+    margin-top: 0px;
+  }
+  .routePageInfo > h2 {
+    margin-bottom: 0px;
+  }
+
+
   .nav {
     width: 15vw;
     display: flex;
@@ -276,7 +301,7 @@ body {
   .bigMap {
     margin: 0 auto;
     height: 50vh;
-    width: 50vw;
+    width: 45vw;
     /* box-shadow: 5px 10px, 10px; */
     box-shadow: 0px 0px 19px -16px rgba(0, 0, 0, 1);
     border-radius: 1%;
@@ -284,7 +309,7 @@ body {
 
   #map {
     height: 50vh;
-    width: 50vw;
+    width: 45vw;
     z-index: 0;
   }
 
@@ -387,4 +412,9 @@ body {
 
 .noDisplay {
   display: none;
+}
+
+
+.routePage {
+  display: flex;
 }
