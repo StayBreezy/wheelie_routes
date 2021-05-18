@@ -18,7 +18,7 @@ export default function Route(props) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const userState = useSelector((state) => state.userReducer);
-  // const {user_id} = userState.id;
+  const {user_id} = userState.id;
   const [route_id, setRouteId] = useState("");
   const [nameChange, setNameChange] = useState("");
   const [isEditing, setEditing] = useState(false);
@@ -135,12 +135,12 @@ export default function Route(props) {
     });
   };
 
-  // const handleClick = () => {
-  //   axios.post('/api/postComment', {comment, user_id, route_id})
-  //   .then(res =>{
-  //     setComments(res.data)
-  //   })
-  // }
+  const handleClick = () => {
+    axios.post('/api/postComment', {comment, user_id, route_id})
+    .then(res =>{
+      setComments(res.data)
+    })
+  }
 
   return (
     <div>
@@ -190,18 +190,20 @@ export default function Route(props) {
         </div>
       </div>
       </div>
-      {/* <div>
+      <div>
         <h2>Comments:</h2>
         <div className="commentSec">
         <textarea onChange={e => setComment(e.target.value)}className="commentInput" id="comment" name="comment" />
         <button className={userState.isLoggedIn ? "postBtn" : "noPostBtn"} onClick={()=> handleClick()}>Post</button>
         <p className={userState.isLoggedIn ? "noPostBtn" : ""}>Must be Logged in to Post</p>
         {comments.map(e => {
+         return <div>
           <p>{e.comment}</p>
           <p>by: {e.user_id}</p>
+          </div>
         })}
         </div>
-      </div> */}
+      </div>
       {/* <div>General recommendations</div> */}
       {/* <h3>Add imgs</h3>
       <Dropzone
