@@ -84,8 +84,8 @@ app.post("/api/postComment", comments.post);
 app.put("/api/editComment", comments.editComment);
 app.delete("/api/deleteComment", comments.deleteComment);
 
-app.get("api/getPictures/:route_id", pictures.getRoutePics);
-app.post("api/uploadPictures/:route_id", pictures.uploadRoutePics);
+app.get("/api/getPictures/:route_id", pictures.getRoutePics);
+app.post("/api/uploadPictures/:route_id", pictures.uploadRoutePics);
 
 massive({
   connectionString: CONNECTION_STRING,

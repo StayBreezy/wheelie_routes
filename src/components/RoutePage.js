@@ -18,10 +18,13 @@ export default function Route(props) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const userState = useSelector((state) => state.userReducer);
-  const {user_id} = userState.id;
+  const { user_id } = userState.id;
   const [route_id, setRouteId] = useState("");
   const [nameChange, setNameChange] = useState("");
   const [isEditing, setEditing] = useState(false);
+  const [description, setDescription] = useState("");
+  const [isUploading, setUploading] = useState(false);
+  const [url, setUrl] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -35,6 +38,10 @@ export default function Route(props) {
       .catch((err) => console.log(err));
   }, []);
 
+
+  const postPhoto = () => {
+    axios.post(`/api/uploadPictures/${route_id}`, {user_id, url, description})
+  }
   //   useEffect(() => {
   // axios.post("/api/getComments", {route_id})
   // .then(res => {
@@ -61,8 +68,6 @@ export default function Route(props) {
     }
   }, [gpx]);
 
-  const [isUploading, setUploading] = useState(false);
-  const [url, setUrl] = useState("");
 
   const getSignedRequest = ([file]) => {
     setUploading(true);
@@ -97,7 +102,6 @@ export default function Route(props) {
       .then((response) => {
         setUploading(false);
         setUrl(url);
-        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
       })
       .catch((err) => {
         setUploading(false);
@@ -136,11 +140,12 @@ export default function Route(props) {
   };
 
   const handleClick = () => {
-    axios.post('/api/postComment', {comment, user_id, route_id})
-    .then(res =>{
-      setComments(res.data)
-    })
-  }
+    axios
+      .post("/api/postComment", { comment, user_id, route_id })
+      .then((res) => {
+        setComments(res.data);
+      });
+  };
 
   return (
     <div>
@@ -152,60 +157,77 @@ export default function Route(props) {
         <h1 className="routePageH1">{route.name}</h1>
       </div>
       <div className="routePage">
-
-      <div className="bigMap">
-        <div id="map"></div>
-        <button
-          onClick={() => handleEdit()}
-          className={userState.id === route.user_id ? "deleteBtn" : "noDisplay"}
+        <div className="bigMap">
+          <div id="map"></div>
+          <button
+            onClick={() => handleEdit()}
+            className={
+              userState.id === route.user_id ? "deleteBtn" : "noDisplay"
+            }
           >
-          Edit
-        </button>
-        <input
-          type="text"
-          onChange={(e) => setNameChange(e.target.value)}
-          className={isEditing ? "" : "noDisplay"}
+            Edit
+          </button>
+          <input
+            type="text"
+            onChange={(e) => setNameChange(e.target.value)}
+            className={isEditing ? "" : "noDisplay"}
           />
-        <button
-          className={isEditing ? "" : "noDisplay"}
-          onClick={() => handleSubmitEdit()}
+          <button
+            className={isEditing ? "" : "noDisplay"}
+            onClick={() => handleSubmitEdit()}
           >
-          Submit
-        </button>
-        <button
-          className={userState.id === route.user_id ? "deleteBtn" : "noDisplay"}
-          onClick={() => handleDelete()}
+            Submit
+          </button>
+          <button
+            className={
+              userState.id === route.user_id ? "deleteBtn" : "noDisplay"
+            }
+            onClick={() => handleDelete()}
           >
-          DELETE
-        </button>
-      </div>
-      <div className="routePageInfo">
-        <h2>Route Info:</h2>
-        <div className="routePageInfoInfo">
-          <p>Distance: {route.distance}mi</p>
-          <p>Vertical Gain: {route.vertical_gain}ft</p>
-          <p>Recommended Bike: {route.recommended_bike}</p>
-          <p>Water: {isTrue(route.water)}</p>
-          <p>Shops: {isTrue(route.shops)}</p>
+            DELETE
+          </button>
         </div>
-      </div>
+        <div className="routePageInfo">
+          <h2>Route Info:</h2>
+          <div className="routePageInfoInfo">
+            <p>Distance: {route.distance}mi</p>
+            <p>Vertical Gain: {route.vertical_gain}ft</p>
+            <p>Recommended Bike: {route.recommended_bike}</p>
+            <p>Water: {isTrue(route.water)}</p>
+            <p>Shops: {isTrue(route.shops)}</p>
+          </div>
+        </div>
       </div>
       <div>
         <h2>Comments:</h2>
         <div className="commentSec">
-        <textarea onChange={e => setComment(e.target.value)}className="commentInput" id="comment" name="comment" />
-        <button className={userState.isLoggedIn ? "postBtn" : "noPostBtn"} onClick={()=> handleClick()}>Post</button>
-        <p className={userState.isLoggedIn ? "noPostBtn" : ""}>Must be Logged in to Post</p>
-        {comments.map(e => {
-         return <div>
-          <p>{e.comment}</p>
-          <p>by: {e.user_id}</p>
-          </div>
-        })}
+          <textarea
+            onChange={(e) => setComment(e.target.value)}
+            className="commentInput"
+            id="comment"
+            name="comment"
+          />
+          <button
+            className={userState.isLoggedIn ? "postBtn" : "noPostBtn"}
+            onClick={() => handleClick()}
+          >
+            Post
+          </button>
+          <p className={userState.isLoggedIn ? "noPostBtn" : ""}>
+            Must be Logged in to Post
+          </p>
+          {comments.map((e) => {
+            return (
+              <div>
+                <p>{e.comment}</p>
+                <p>by: {e.user_id}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
-      {/* <div>General recommendations</div> */}
-      {/* <h3>Add imgs</h3>
+      <div>General recommendations</div>
+      <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}
         accept="image/*"
@@ -231,21 +253,23 @@ export default function Route(props) {
             {isUploading ? (
               <GridLoader />
             ) : (
-              <p>Drop files here, or click to select files</p>
+              <p>Drop images here, or click to select images</p>
             )}
           </div>
         )}
-      </Dropzone> */}
-      {/* <div className="comments">
+      </Dropzone>
+      <input type="text" onChange={e => setDescription(e.target.value)}/>
+      <button onClick={() => postPhoto()}>Post</button>
+      <div className="comments">
         <h2>Comments</h2>
-        {comments.map(e => {
-          return
+        {comments.map((e) => {
+          return;
           <div className="comment">
             <p>{e.comment}</p>
             <p>{e.user_id}</p>
-          </div> */}
-      {/* })} */}
-      {/* </div> */}
+          </div>;
+        })}
+      </div>
     </div>
   );
 }
