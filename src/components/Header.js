@@ -13,8 +13,8 @@ export default function Header(props) {
   const handleClick = () => {
     if (!userState.isLoggedIn) {
       alert("Must be logged in to upload");
-    } else {
-      history.push("/upload");
+    // } else {
+    //   history.push("/upload");
     }
   };
 
@@ -56,7 +56,7 @@ export default function Header(props) {
               <Link to="/" className="noLinkLink">
                 <p>Search</p>
               </Link>
-              <Link className="noLinkLink" to="/upload">
+              <Link className="noLinkLink" to="/login">
                 <p className="pLink" onClick={() => handleClick()}>
                   Upload
                 </p>
@@ -141,7 +141,7 @@ export default function Header(props) {
         <Link to="/" className="noLinkLink">
           <p>Search</p>
         </Link>
-        <Link className="noLinkLink" to="/upload">
+        <Link className="noLinkLink" to="/login">
           <p className="pLink" onClick={() => handleClick()}>
             Upload
           </p>
