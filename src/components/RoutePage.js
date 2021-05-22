@@ -52,8 +52,8 @@ export default function Route(props) {
   useEffect(() => {
     if (gpx !== "") {
       var map = L.map("map", {
-        zoomControl: false,
-        scrollWheelZoom: true,
+        zoomControl: true,
+        scrollWheelZoom: false,
       });
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
