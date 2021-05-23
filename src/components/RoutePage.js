@@ -238,7 +238,7 @@ export default function Route(props) {
         </div>
       </div>
       {/* <div>General recommendations</div> */}
-      <h3>Add imgs</h3>
+      {/* <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}
         accept="image/*"
@@ -269,13 +269,13 @@ export default function Route(props) {
           </div>
         )}
       </Dropzone>
-      {/* <input type="text" onChange={e => setDescription(e.target.value)}/>
-      <button onClick={() => postPhoto()}>Post</button> */}
+      <input type="text" onChange={e => setDescription(e.target.value)}/>
+      <button onClick={() => postPhoto()}>Post</button>
       <div className='imgs'>
       {routePics.length > 0 ? routePics.map((e) =>{
         return <img src={`${e.picture_url}`}/>
         }) : null}
-        </div>
+        </div> */}
     </div>
   );
 }
