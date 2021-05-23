@@ -1,4 +1,4 @@
-INSERT INTO comments (user_id, route_id, comment)
+INSERT INTO comments (username, route_id, comment)
 VALUES ($1, $2, $3);
 
 SELECT * FROM comments

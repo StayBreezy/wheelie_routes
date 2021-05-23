@@ -408,13 +408,22 @@ body {
   .pLink {
     cursor: pointer;
   }
-}
+  .comment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    height: 100px;
+    width: 150%;
 
-.noDisplay {
-  display: none;
-}
+  }
+  .noDisplay {
+    display: none;
+  }
 
 
-.routePage {
-  display: flex;
+
+  .routePage {
+    display: flex;
+  }
 }

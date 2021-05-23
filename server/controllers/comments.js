@@ -1,15 +1,15 @@
 module.exports = {
   getAll: async (req, res) => {
-    const {route_id} = req.body;
+    const {id} = req.body;
     const db = req.app.get("db");
-    const comments = await db.comments.get_all_comments([route_id]);
+    const comments = await db.comments.get_all_comments([id]);
     return res.send(comments);
   },
   post: async (req, res) => {
-    const { user_id, route_id, comment } = req.body;
+    const { username, route_id, comment } = req.body;
     const db = req.app.get("db");
     const comments = await db.comments.post_comment([
-      user_id,
+      username,
       route_id,
       comment,
     ]);

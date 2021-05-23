@@ -1,9 +1,10 @@
 module.exports = {
- getRoutePics: (req, res) => {
+ getRoutePics: async (req, res) => {
      // req.params route_id
-     const {route_id} = req.params;
+     const {id} = req.params;
      const db = req.app.get("db");
-     const pics = db.pictures.get_all_pictures_from_route([route_id]);
+     const pics = await db.pictures.get_all_pictures_for_route([id]);
+     console.log(pics)
     return res.send(pics);
  },
  uploadRoutePics: async (req, res) => {
@@ -11,7 +12,7 @@ module.exports = {
      const {route_id} = req.params;
      const {user_id, url, description} = req.body;
      const db = req.app.get("db");
-     const pics = db.pictures.insert_pictures([route_id, user_id, url, description])
+     const pics = await db.pictures.insert_pictures([route_id, user_id, url, description])
      return res.send(pics);
      // req.body user_id picture_url description
      // figure out wether to upload 1 pic at a time or be able to upload multiple images which probably means iterating over an array to post photos

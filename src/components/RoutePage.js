@@ -18,13 +18,15 @@ export default function Route(props) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const userState = useSelector((state) => state.userReducer);
-  const { user_id } = userState.id;
+  const username = userState.username;
+  const user_id = userState.id;
   const [route_id, setRouteId] = useState("");
   const [nameChange, setNameChange] = useState("");
   const [isEditing, setEditing] = useState(false);
   const [description, setDescription] = useState("");
   const [isUploading, setUploading] = useState(false);
   const [url, setUrl] = useState("");
+  const [routePics, setRoutePics] = useState([])
   const history = useHistory();
 
   useEffect(() => {
@@ -36,6 +38,12 @@ export default function Route(props) {
         setRouteId(res.data[0].route_id);
       })
       .catch((err) => console.log(err));
+    axios
+      .post('api/getComments', {id})
+      .then((res)=> setComments(res.data))
+    axios
+      .get(`/api/getPictures/${id}`)
+      .then((res) => setRoutePics(res.data))
   }, []);
 
 
@@ -141,12 +149,13 @@ export default function Route(props) {
 
   const handleClick = () => {
     axios
-      .post("/api/postComment", { comment, user_id, route_id })
-      .then((res) => {
-        setComments(res.data);
-      });
+    .post("/api/postComment", { comment, username, route_id })
+    .then((res) => {
+      setComments(res.data);
+    });
   };
 
+  console.log(routePics)
   return (
     <div>
       {console.log(route_id)}
@@ -216,17 +225,19 @@ export default function Route(props) {
           <p className={userState.isLoggedIn ? "noPostBtn" : ""}>
             Must be Logged in to Post
           </p>
-          {comments.map((e) => {
-            return (
-              <div>
+          <div className="comments">
+            <h2>Comments</h2>
+            {comments.map((e) => {
+              return(
+              <div className="comment">
                 <p>{e.comment}</p>
-                <p>by: {e.user_id}</p>
+                <h5>by: {e.username}</h5>
               </div>
-            );
-          })}
+            )})}
+          </div>
         </div>
       </div>
-      <div>General recommendations</div>
+      {/* <div>General recommendations</div> */}
       <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}
@@ -258,18 +269,13 @@ export default function Route(props) {
           </div>
         )}
       </Dropzone>
-      <input type="text" onChange={e => setDescription(e.target.value)}/>
-      <button onClick={() => postPhoto()}>Post</button>
-      <div className="comments">
-        <h2>Comments</h2>
-        {comments.map((e) => {
-          return;
-          <div className="comment">
-            <p>{e.comment}</p>
-            <p>{e.user_id}</p>
-          </div>;
-        })}
-      </div>
+      {/* <input type="text" onChange={e => setDescription(e.target.value)}/>
+      <button onClick={() => postPhoto()}>Post</button> */}
+      <div className='imgs'>
+      {routePics.length > 0 ? routePics.map((e) =>{
+        return <img src={`${e.picture_url}`}/>
+        }) : null}
+        </div>
     </div>
   );
 }
