@@ -202,8 +202,10 @@ export default function Route(props) {
             <p>Distance: {route.distance}mi</p>
             <p>Vertical Gain: {route.vertical_gain}ft</p>
             <p>Recommended Bike: {route.recommended_bike}</p>
+            <div className='waterFood'>
             <p>Water: {isTrue(route.water)}</p>
             <p>Shops: {isTrue(route.shops)}</p>
+            </div>
           </div>
         </div>
       </div>

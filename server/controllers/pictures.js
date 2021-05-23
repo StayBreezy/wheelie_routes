@@ -4,7 +4,7 @@ module.exports = {
      const {id} = req.params;
      const db = req.app.get("db");
      const pics = await db.pictures.get_all_pictures_for_route([id]);
-     console.log(pics)
+    //  console.log(pics)
     return res.send(pics);
  },
  uploadRoutePics: async (req, res) => {

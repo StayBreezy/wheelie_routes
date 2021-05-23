@@ -78,10 +78,18 @@ body {
 }
 .routePageInfoInfo {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 10px;
-  margin-top: 0px;
+}
+
+.waterFood {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.routePageInfoInfo > p {
+margin: 10px 0px;
 }
 .routePageInfo > h2 {
   margin-bottom: 0px;
@@ -224,8 +232,8 @@ body {
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid black;
-  width: 250px;
-  height: 250px;
+  width: 94%;
+  height: 90%;
 }
 
 .vars {
