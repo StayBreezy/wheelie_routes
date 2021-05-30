@@ -46,7 +46,7 @@ export default function Route(props) {
       .then((res) => setRoutePics(res.data))
   }, []);
 
-
+// console.log(routePics)
   const postPhoto = () => {
     axios.post(`/api/uploadPictures/${route_id}`, {user_id, url, description})
   }
@@ -240,7 +240,7 @@ export default function Route(props) {
         </div>
       </div>
       {/* <div>General recommendations</div> */}
-      {/* <h3>Add imgs</h3>
+      <h3>Add imgs</h3>
       <Dropzone
         onDropAccepted={getSignedRequest}
         accept="image/*"
@@ -275,9 +275,12 @@ export default function Route(props) {
       <button onClick={() => postPhoto()}>Post</button>
       <div className='imgs'>
       {routePics.length > 0 ? routePics.map((e) =>{
-        return <img src={`${e.picture_url}`}/>
+        return(
+        <div className="routePic">
+          <img src={`${e.picture_url}`}/>
+          </div>)
         }) : null}
-        </div> */}
+        </div>
     </div>
   );
 }

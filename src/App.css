@@ -429,7 +429,16 @@ margin: 10px 0px;
     display: none;
   }
 
+.imgs {
+  width: 50%;
+  display: flex;
+  margin: 0 auto;
+}
 
+.routePic > img {
+  max-width: 100px;
+  height: auto;
+}
 
   .routePage {
     display: flex;
