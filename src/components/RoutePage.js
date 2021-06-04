@@ -228,7 +228,7 @@ export default function Route(props) {
             Must be Logged in to Post
           </p>
           <div className="comments">
-            <h2>Comments</h2>
+            {/* <h2>Comments</h2> */}
             {comments.map((e) => {
               return(
               <div className="comment">

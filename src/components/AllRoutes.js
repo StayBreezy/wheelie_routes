@@ -14,9 +14,7 @@ export default function AllRoutes(props) {
   const [water, setWater] = useState(false);
   const [shops, setShops] = useState(false);
   const [miles, setMiles] = useState(true);
-  // const [submit, setSubmit] = useState(false)
 
-  //   const routes = useSelector()
 
   useEffect(() => {
     axios.get("/api/getRoutes").then((res) => {
@@ -114,8 +112,6 @@ export default function AllRoutes(props) {
       return "m"
     }
   }
-  // search false show {routes}
-  // search true show {filteredRoutes}
 
   return (
     <div className="body">
@@ -124,17 +120,6 @@ export default function AllRoutes(props) {
       {console.log(filteredRoutes)}
       <div className="filter">
         <h3>Route Filters: </h3>
-        {/* <input></input> */}
-        {/* <div>
-          <p>distance</p>
-          <button>yes</button>
-          <button>no</button>
-        </div>
-        <div>
-          <p>Vertical Gain</p>
-          <button>yes</button>
-          <button>no</button>
-        </div> */}
         <form>
           <p>Recommended Bike</p>
           <input
