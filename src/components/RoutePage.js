@@ -50,12 +50,6 @@ export default function Route(props) {
   const postPhoto = () => {
     axios.post(`/api/uploadPictures/${route_id}`, {user_id, url, description})
   }
-  //   useEffect(() => {
-  // axios.post("/api/getComments", {route_id})
-  // .then(res => {
-  //   setComments(res.data)
-  // })
-  //   }, [route_id])
 
   useEffect(() => {
     if (gpx !== "") {
