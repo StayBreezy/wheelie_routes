@@ -421,10 +421,16 @@ margin: 10px 0px;
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid black;
+    padding: 1px;
     height: 100px;
-    width: 150%;
+    width: 100%;
 
   }
+h5 {
+  margin: 0;
+
+}
+
   .noDisplay {
     display: none;
   }
@@ -436,7 +442,7 @@ margin: 10px 0px;
 }
 
 .routePic > img {
-  max-width: 100px;
+  max-width: 200px;
   height: auto;
 }
 
